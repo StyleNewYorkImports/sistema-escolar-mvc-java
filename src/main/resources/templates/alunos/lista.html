@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Alunos | Escola em Dia</title><link rel="stylesheet" th:href="@{/css/estilo.css}"></head>
+<body><div th:replace="~{fragments :: topo}"></div><main class="container">
+  <div th:replace="~{fragments :: mensagens}"></div>
+  <section class="titulo-pagina"><div><p class="sobretitulo">CADASTROS</p><h1>Alunos</h1><p class="subtitulo">Consulte e atualize os dados dos alunos.</p></div><a class="botao primario" th:href="@{/alunos/novo}">＋ Novo aluno</a></section>
+  <section class="cartao tabela-wrap">
+    <div class="tabela-topo"><div><strong>Lista de alunos</strong><span class="contador" th:text="${alunos.size()}"></span></div><span class="texto-suave">Dados salvos nesta sessão</span></div>
+    <div th:if="${#lists.isEmpty(alunos)}" class="vazio"><div class="vazio-icone">♙</div><h2>Nenhum aluno cadastrado</h2><p>Adicione o primeiro aluno para começar.</p><a class="botao secundario" th:href="@{/alunos/novo}">Cadastrar aluno</a></div>
+    <div class="rolagem" th:unless="${#lists.isEmpty(alunos)}"><table><thead><tr><th>Nome</th><th>E-mail</th><th>RG</th><th class="col-acoes">Ações</th></tr></thead><tbody>
+      <tr th:each="aluno : ${alunos}"><td class="nome-celula" th:text="${aluno.nome}"></td><td th:text="${aluno.email}"></td><td><span class="rg" th:text="${aluno.rg}"></span></td><td class="acoes"><a class="acao-link" th:href="@{/alunos/editar/{id}(id=${aluno.id})}">Editar</a><form th:action="@{/alunos/excluir/{id}(id=${aluno.id})}" method="post" onsubmit="return confirm('Excluir este aluno?')"><button class="acao-link perigo-link" type="submit">Excluir</button></form></td></tr>
+    </tbody></table></div>
+  </section>
+  <p class="nota-rodape">O RG é obrigatório e não pode ser repetido no cadastro.</p>
+</main></body></html>

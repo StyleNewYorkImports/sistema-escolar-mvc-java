@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Aluno | Escola em Dia</title><link rel="stylesheet" th:href="@{/css/estilo.css}"></head>
+<body><div th:replace="~{fragments :: topo}"></div><main class="container container-form">
+  <div th:replace="~{fragments :: mensagens}"></div><a class="voltar" th:href="@{/alunos}">← Voltar para alunos</a>
+  <section class="cartao formulario-cartao"><p class="sobretitulo">DADOS DO ALUNO</p><h1 th:text="${aluno.id == null ? 'Novo aluno' : 'Editar aluno'}"></h1><p class="subtitulo">Preencha os campos para salvar as informações.</p>
+    <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="post"><input type="hidden" th:field="*{id}">
+      <label for="nome">Nome completo <span>*</span></label><input id="nome" type="text" th:field="*{nome}" maxlength="100" placeholder="Ex.: Ana Souza" required>
+      <label for="email">E-mail <span>*</span></label><input id="email" type="email" th:field="*{email}" maxlength="120" placeholder="nome@email.com" required>
+      <label for="rg">RG <span>*</span></label><input id="rg" type="text" th:field="*{rg}" maxlength="30" placeholder="Digite o RG" required><small>Este número deve ser único para cada aluno.</small>
+      <div class="botoes-form"><a class="botao claro" th:href="@{/alunos}">Cancelar</a><button class="botao primario" type="submit">Salvar aluno</button></div>
+    </form>
+  </section>
+</main></body></html>

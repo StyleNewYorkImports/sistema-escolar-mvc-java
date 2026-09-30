@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Curso | Escola em Dia</title><link rel="stylesheet" th:href="@{/css/estilo.css}"></head>
+<body><div th:replace="~{fragments :: topo}"></div><main class="container container-form"><div th:replace="~{fragments :: mensagens}"></div><a class="voltar" th:href="@{/cursos}">← Voltar para cursos</a>
+  <section class="cartao formulario-cartao"><p class="sobretitulo">DADOS DO CURSO</p><h1 th:text="${curso.id == null ? 'Novo curso' : 'Editar curso'}"></h1><p class="subtitulo">Informe os dados principais do curso.</p>
+    <form th:action="@{/cursos/salvar}" th:object="${curso}" method="post"><input type="hidden" th:field="*{id}">
+      <label for="nome">Nome do curso <span>*</span></label><input id="nome" type="text" th:field="*{nome}" maxlength="100" placeholder="Ex.: Desenvolvimento de Sistemas" required>
+      <label for="descricao">Descrição</label><textarea id="descricao" th:field="*{descricao}" maxlength="500" rows="4" placeholder="Uma descrição breve do curso"></textarea>
+      <label for="cargaHoraria">Carga horária (horas) <span>*</span></label><input id="cargaHoraria" type="number" th:field="*{cargaHoraria}" min="1" step="1" placeholder="Ex.: 120" required>
+      <div class="botoes-form"><a class="botao claro" th:href="@{/cursos}">Cancelar</a><button class="botao primario" type="submit">Salvar curso</button></div>
+    </form>
+  </section></main></body></html>

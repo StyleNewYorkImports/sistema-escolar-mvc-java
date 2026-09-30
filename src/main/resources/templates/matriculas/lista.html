@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Matrículas | Escola em Dia</title><link rel="stylesheet" th:href="@{/css/estilo.css}"></head>
+<body><div th:replace="~{fragments :: topo}"></div><main class="container"><div th:replace="~{fragments :: mensagens}"></div>
+  <section class="titulo-pagina"><div><p class="sobretitulo">GESTÃO ESCOLAR</p><h1>Matrículas</h1><p class="subtitulo">Acompanhe os vínculos entre alunos e cursos.</p></div><a class="botao primario" th:href="@{/matriculas/nova}">＋ Nova matrícula</a></section>
+  <section class="cartao tabela-wrap"><div class="tabela-topo"><div><strong>Matrículas cadastradas</strong><span class="contador" th:text="${matriculas.size()}"></span></div><span class="texto-suave">O status pode ser alterado nesta lista</span></div>
+    <div th:if="${#lists.isEmpty(matriculas)}" class="vazio"><div class="vazio-icone">⇄</div><h2>Nenhuma matrícula por enquanto</h2><p>Cadastre aluno e curso e depois crie o vínculo entre eles.</p><a class="botao secundario" th:href="@{/matriculas/nova}">Criar matrícula</a></div>
+    <div class="rolagem" th:unless="${#lists.isEmpty(matriculas)}"><table><thead><tr><th>Aluno</th><th>Curso</th><th>Data</th><th>Status</th><th class="col-status">Atualizar status</th></tr></thead><tbody>
+      <tr th:each="matricula : ${matriculas}"><td class="nome-celula" th:text="${matricula.aluno.nome}"></td><td th:text="${matricula.curso.nome}"></td><td th:text="${#temporals.format(matricula.dataMatricula, 'dd/MM/yyyy')}"></td><td><span class="status-pill" th:classappend="${'status-' + #strings.toLowerCase(matricula.status.name())}" th:text="${matricula.status}"></span></td><td><form class="status-form" th:action="@{/matriculas/{id}/status(id=${matricula.id})}" method="post"><select name="status" aria-label="Novo status"><option th:each="opcao : ${statusOpcoes}" th:value="${opcao}" th:text="${opcao}" th:selected="${opcao == matricula.status}"></option></select><button class="botao mini" type="submit">Salvar</button></form></td></tr>
+    </tbody></table></div>
+  </section><p class="nota-rodape">A mesma pessoa não pode ter duas matrículas ativas no mesmo curso.</p>
+</main></body></html>

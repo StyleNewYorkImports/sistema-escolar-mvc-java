@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nova matrícula | Escola em Dia</title><link rel="stylesheet" th:href="@{/css/estilo.css}"></head>
+<body><div th:replace="~{fragments :: topo}"></div><main class="container container-form"><div th:replace="~{fragments :: mensagens}"></div><a class="voltar" th:href="@{/matriculas}">← Voltar para matrículas</a>
+  <section class="cartao formulario-cartao"><p class="sobretitulo">NOVA MATRÍCULA</p><h1>Vincular aluno e curso</h1><p class="subtitulo">A matrícula será criada como ativa com a data de hoje.</p>
+    <div class="aviso" th:if="${#lists.isEmpty(alunos) or #lists.isEmpty(cursos)}"><strong>Antes de continuar</strong><br>Cadastre ao menos um aluno e um curso. <span><a th:href="@{/alunos/novo}">Cadastrar aluno</a> · <a th:href="@{/cursos/novo}">Cadastrar curso</a></span></div>
+    <form th:action="@{/matriculas/salvar}" method="post" th:if="${not #lists.isEmpty(alunos) and not #lists.isEmpty(cursos)}">
+      <label for="alunoId">Aluno <span>*</span></label><select id="alunoId" name="alunoId" required><option value="">Selecione um aluno</option><option th:each="aluno : ${alunos}" th:value="${aluno.id}" th:text="${aluno.nome}" th:selected="${aluno.id == alunoSelecionado}"></option></select>
+      <label for="cursoId">Curso <span>*</span></label><select id="cursoId" name="cursoId" required><option value="">Selecione um curso</option><option th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome}" th:selected="${curso.id == cursoSelecionado}"></option></select>
+      <div class="botoes-form"><a class="botao claro" th:href="@{/matriculas}">Cancelar</a><button class="botao primario" type="submit">Criar matrícula</button></div>
+    </form>
+  </section></main></body></html>
